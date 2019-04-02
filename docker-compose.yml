@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  itsraka.github.page:
+    container_name: "itsraka.github.page"
+    image: "node:latest"
+    working_dir: /usr/local/app
+    volumes:
+      - .:/usr/local/app
+    command: "sleep 1d"

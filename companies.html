@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IT S-R-A-K-A Companies</title>
+    <link rel="icon" href="public/favicon.ico" type="image/ico" sizes="16x16">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="public/styles.css">
+    <script>
+        const COMPANIES_DATA_JSON = "https://cdn.jsdelivr.net/gh/senseyedeveloper/geomapassets/companies/data/min-build-v7/v41.json";
+    </script>
+</head>
+<body>
+    <section class="navigation z-depth-2">
+        <nav class="container">
+            <div class="nav-wrapper">
+                <a href="https://itsraka.github.io/companies.html" class="brand-logo left">IT S-R-A-K-A Companies</a>
+                <a href="https://itsraka.github.io/courses.html" class="brand-logo right">IT S-R-A-K-A Courses</a>
+            </div>
+        </nav>
+    </section>
+
+    <section class="content">
+        <div class="js-container container">
+            <div class="row">
+                <div class="col s3 left-menu">
+                    <div id="js-count-hint" class="result" style="top:108px;">
+                        <div class="js-count-loader result__wrap">
+                            <span class="js-empty result__label">Відсутні результати</span>
+                            <a class="js-submit result__submit" href="javascript:void(0);"><span class="result__label">Показати</span><span class="js-count-result result__count"></span></a>
+                            <a class="js-close result__close" href="javascript:void(0);">+</a>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="name">Винагорода:</div>
+                        <div class="elements">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input id="js-salary-from" type="number" class="validate white-text" step="100" placeholder="500">
+                                    <label for="js-salary-from">від</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input id="js-salary-to" type="number" class="validate white-text" step="100" placeholder="8000">
+                                    <label for="js-salary-to">до</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="name">Місто:</div>
+                        <div class="elements">
+                            <div class="input-field col s12">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input type="text" id="js-city-autocomplete" class="autocomplete white-text" placeholder="Київ">
+                                        <label for="js-city-autocomplete">Виберіть місто</label>
+                                    </div>
+                                </div>
+                                <div id="js-selected-cities">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="name">Компанії:</div>
+                        <div class="elements">
+                            <div class="input-field col s12">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input type="text" id="js-company-autocomplete" class="autocomplete white-text" placeholder="AwesomeSoft">
+                                        <label for="js-company-autocomplete">Виберіть компанії</label>
+                                    </div>
+                                </div>
+                                <div id="js-selected-companies">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="name">Додатково:</div>
+                        <div class="elements">
+                            <div class="input-field col s12">
+                                <div>
+                                    <p>
+                                        <label for="js-review-exists">
+                                            <input type="checkbox" id="js-review-exists" />
+                                            <span>Тільки з відгуками про компанію</span>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label for="js-vacancy-newest">
+                                            <input type="checkbox" id="js-vacancy-newest" />
+                                            <span>Нові вакансії за 7 днів</span>
+                                        </label>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block" id="js-company-size-filter">
+                        <div class="name">Розмір компанії:</div>
+                        <div class="elements">
+                            <p>
+                                <label for="company-size-1500">
+                                    <input type="checkbox" id="company-size-1500" data-alias="1500+" />
+                                    <span>1500+ спеціалістів</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="company-size-800—1500">
+                                    <input type="checkbox" id="company-size-800—1500" data-alias="800—1500" />
+                                    <span>від 800 до 1500</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="company-size-201—800">
+                                    <input type="checkbox" id="company-size-201—800" data-alias="200—800" />
+                                    <span>від 200 до 800</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="company-size-81-200">
+                                    <input type="checkbox" id="company-size-81-200" data-alias="81—200" />
+                                    <span>від 81 до 200</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="company-size-80">
+                                    <input type="checkbox" id="company-size-80" data-alias="" />
+                                    <span>до 80 спеціалістів</span>
+                                </label>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="block" id="js-company-type-filter">
+                        <div class="name">Тип компанії:</div>
+                        <div class="elements">
+                            <p>
+                                <label for="company-type-product">
+                                    <input type="checkbox" id="company-type-product" data-alias="product" />
+                                    <span>Продуктова</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="company-type-startup">
+                                    <input type="checkbox" id="company-type-startup" data-alias="startup" />
+                                    <span>Startup</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="company-type-outsource">
+                                    <input type="checkbox" id="company-type-outsource" data-alias="outsource" />
+                                    <span>Outsource</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="company-type-outstaff">
+                                    <input type="checkbox" id="company-type-outstaff" data-alias="outstaff" />
+                                    <span>Outstaff</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="company-type-outsource-outstaff">
+                                    <input type="checkbox" id="company-type-outsource-outstaff" data-alias="outsource-outstaff" />
+                                    <span>Outsource & Outstaff</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="company-type-academy">
+                                    <input type="checkbox" id="company-type-academy" data-alias="academy" />
+                                    <span>Academy</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="company-type-recruitment-agency">
+                                    <input type="checkbox" id="company-type-recruitment-agency" data-alias="recruitment-agency" />
+                                    <span>Recruitment Agency</span>
+                                </label>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <button id="js-search-submit" class="btn waves-effect waves-light" type="submit" name="action">
+                            Шукати
+                        </button>
+                    </div>
+                </div>
+                <div class="col s9">
+                    <div class="col s12">
+                        <h5 class="left-align">Знайдено, вакансій: <span id="js-result-vacancy-count">5000+</span>, компаній: <span id="js-result-company-count">5000+</span> [ <span id="js-result-show-time">100</span> мс ]</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input type="text" id="js-vacancy-autocomplete" class="white-text" placeholder="Rust developer">
+                                    <label for="js-vacancy-autocomplete">Пошук</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <ul id="js-tabs" class="tabs">
+                                <li class="tab col s3"><a id="js-select-map-tab" href="#gmap" class="active">Показати на карті</a></li>
+                                <li class="tab col s3"><a id="js-select-result-tab" href="#js-nearest-center-companies">Показати списком</a></li>
+                            </ul>
+                        </div>
+                        <div id="gmap" class="col s12">
+                            <div class="row">
+                                <div id="js-google-map" style="width: 100%; height: 800px;"></div>
+                            </div>
+                        </div>
+                        <div id="js-nearest-center-companies" class="col s12"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="public/companies.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC77lHMytBqt0YQbjoWYd0EFknzq03NSKI&callback=initializeMap" async defer></script>
+</body>
+</html>

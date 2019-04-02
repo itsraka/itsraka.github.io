@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IT S-R-A-K-A Courses</title>
+    <link rel="icon" href="public/favicon.ico" type="image/ico" sizes="16x16">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="public/styles.css">
+    <script>
+        const COURSES_DATA_JSON = "https://cdn.jsdelivr.net/gh/senseyedeveloper/geomapassets/courses/data/v1.json";
+    </script>
+</head>
+<body>
+    <section class="navigation z-depth-2">
+        <nav class="container">
+            <div class="nav-wrapper">
+                <a href="https://itsraka.github.io/companies.html" class="brand-logo left">IT S-R-A-K-A Companies</a>
+                <a href="https://itsraka.github.io/courses.html" class="brand-logo right">IT S-R-A-K-A Courses</a>
+            </div>
+        </nav>
+    </section>
+
+    <section class="content">
+        <div class="container js-container">
+            <div class="row">
+                <div class="col s3 left-menu">
+                    <div id="js-count-hint" class="result" style="top:108px;">
+                        <div class="js-count-loader result__wrap">
+                            <span class="js-empty result__label">Відсутні результати</span>
+                            <a class="js-submit result__submit" href="javascript:void(0);"><span class="result__label">Показати</span><span class="js-count-result result__count"></span></a>
+                            <a class="js-close result__close" href="javascript:void(0);">+</a>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="name">Курси:</div>
+                        <div class="elements">
+                            <div class="input-field col s12">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input type="text" id="js-school-autocomplete" class="autocomplete white-text" placeholder="AwesomeSoft">
+                                        <label for="js-school-autocomplete">Виберіть курси</label>
+                                    </div>
+                                </div>
+                                <div id="js-selected-courses">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="name">Міста:</div>
+                        <div class="elements">
+                            <div class="input-field col s12">
+                                <div id="js-selected-cities">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="name">Спеціалізація:</div>
+                        <div class="elements">
+                            <div class="input-field col s12">
+                                <div id="js-selected-directions">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="name">Додатково:</div>
+                        <div class="elements">
+                            <div class="input-field col s12">
+                                <div>
+                                    <p>
+                                        <label for="js-full-free">
+                                            <input type="checkbox" id="js-full-free" />
+                                            <span>Безкоштовні курси<span class="badge"></span>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label for="js-teacher-work-in-company">
+                                            <input type="checkbox" id="js-teacher-work-in-company" />
+                                            <span>Викладач працює в компанії<span class="badge"></span>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label for="js-course-by-company">
+                                            <input type="checkbox" id="js-course-by-company" />
+                                            <span>Курси від компанії<span class="badge"></span>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label for="js-course-with-plan">
+                                            <input type="checkbox" id="js-course-with-plan" />
+                                            <span>Є план курсу<span class="badge"></span>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label for="js-employment-guarantee">
+                                            <input type="checkbox" id="js-employment-guarantee" />
+                                            <span>Гарантія працевлаштування<span class="badge"></span>
+                                        </label>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <button id="js-search-submit" class="btn waves-effect waves-light" type="submit" name="action">
+                            Шукати
+                        </button>
+                    </div>
+                </div>
+                <div class="col s9">
+                    <div class="col s12">
+                        <h5 class="left-align">Знайдено, курсів: <span id="js-result-course-count">26</span>, спеціалізацій: <span id="js-result-direction-count">27</span>, міст: <span id="js-result-city-count">14</span></h5>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input type="text" id="js-direction-autocomplete" class="white-text" placeholder="Rust developer">
+                                    <label for="js-direction-autocomplete">Пошук</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <ul id="js-tabs" class="tabs">
+                                <li class="tab col s3"><a id="js-select-map-tab" href="#gmap" class="active">Показати на карті</a></li>
+                                <li class="tab col s3"><a id="js-select-result-tab" href="#js-nearest-center-companies">Показати списком</a></li>
+                            </ul>
+                        </div>
+                        <div id="gmap" class="col s12">
+                            <div class="row">
+                                <div id="js-google-map" style="width: 100%; height: 800px;"></div>
+                            </div>
+                        </div>
+                        <div id="js-nearest-center-companies" class="col s12"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="public/courses.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC77lHMytBqt0YQbjoWYd0EFknzq03NSKI&callback=initializeMap" async defer></script>
+</body>
+</html>
